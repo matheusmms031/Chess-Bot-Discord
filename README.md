@@ -37,3 +37,11 @@ TOKENS = {
     }
 }
 ```
+
+## Executando o Bot
+
+Agora para executar basta entrar na pasta do repositório e digitar:
+
+```bash
+python setup.py
+```
