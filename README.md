@@ -1,4 +1,4 @@
-![image](https://github.com/TeuzimMG/Lichess-Bot-Xadrez-Brasil/assets/71942508/69052581-6415-440c-9697-eb647f9e23d1)# Chess Bot Discord
+# Chess Bot Discord
 
 **Bot de xadrez para servidores de discord**, nele é possível jogar xadrez usando coordenadas e fazer busca por partidas e jogadores das plataformas mais famosas de xadrez.<br><br><br>
 <div align="center" styles='padding:500px'>
