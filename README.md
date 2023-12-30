@@ -28,4 +28,13 @@ Para inicializar o Bot é necessário criar uma aplicação na [página de desen
 
 ### Configurando Tokens
 
-Para configurar é necessário editar o arquivo [tokens.py](./tokens.py)
+Para configurar é necessário editar o arquivo [tokens.py](./tokens.py) e substituir para os seguintes dados:
+```py
+TOKENS = {
+    'discord': 'O token do bot discord',
+    'mongodb': {
+        'ip': 'IP do banco de dados',
+        'porta': 'Porta do banco de dados'
+    }
+}
+```
