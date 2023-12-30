@@ -1,6 +1,7 @@
 import pymongo
+from tokens import TOKENS
 
-client = pymongo.MongoClient("localhost")
+client = pymongo.MongoClient(TOKENS['mongodb']['ip'],TOKENS['mongodb']['porta'])
 db = client.informations
 db_membros = client.membros
 col_partidas = db.partidas
@@ -10,7 +11,7 @@ def registrar_proposta(brancas,pretas,mensagem,canal,server,tempo):
     col_propostas.insert_one({'_id':mensagem,'brancas':brancas,'pretas':pretas,'canal':canal,'server':server,'tempo':tempo})
 
 def registrar_partida(brancas,pretas,canal,server,tempo):
-    partidas = col_partidas.count()
+    partidas = col_partidas.count_documents({})
     col_partidas.insert_one({'_id':partidas+1,'brancas':brancas,'pretas':pretas,'canal':canal,'server':server,'tempo':tempo,'move':brancas,'moves':[]})
 
 def excluir_proposta(id):
@@ -20,20 +21,20 @@ def ver_partidas():
     return col_partidas.find()
 
 def ver_quantidade_partidas():
-    return col_partidas.count()
+    return col_partidas.count_documents({})
 
 def ver_quantidade_propostas_de_canal(canal):
     return col_propostas.count_documents({'canal':canal})
 
 def ver_quantidade_propostas():
-    return col_propostas.count()
+    return col_propostas.count_documents({})
 
 def mover_peca(id,jogador,move):
     partida = col_partidas.find_one({'_id':id})
     data = partida['moves']
     data.append(move)
     newvalues =  {"$set":{'move':jogador,'moves':data}}
-    col_partidas.update({'_id':id},newvalues)
+    col_partidas.update_one({'_id':id},newvalues)
     
 def ver_propostas():
     return col_propostas.find()

@@ -1,6 +1,4 @@
 import discord
-import numpy as np
-import matplotlib
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -13,11 +11,16 @@ from PIL import Image
 from io import BytesIO
 from svglib.svglib import svg2rlg
 import json
+from tokens import TOKENS
 import svglib
 import reportlab
 from reportlab.graphics import renderPDF, renderPM
 
-client = discord.Client() # Chama o client do discord
+
+
+
+intents = discord.Intents.all()
+client = discord.Client(intents=intents) # Chama o client do discord
 
 @client.event
 async def on_ready():
@@ -51,9 +54,9 @@ async def on_message(message): # 'on_message()' é usado para determinar oque fa
             for span in soup.find_all('span'):
                 titulo = span.find('h3')
                 if titulo != None:
-                    rating = span.find('rating').find('strong')
-                    partidas = span.find('rating').find('span')
-                    embed.add_field(name=f"{titulo.text}", value=f"Rating = {rating} | {partidas}", inline=True)
+                    rating = span.find('rating').find('strong').text
+                    partidas = span.find('rating').find('span').text
+                    embed.add_field(name=f"{titulo.text}", value=f"{rating} | {partidas}", inline=True)
                     print(f'{titulo} | {rating}')
             await message.channel.send(embed=embed)
         else:
@@ -62,6 +65,7 @@ async def on_message(message): # 'on_message()' é usado para determinar oque fa
     #
     # Até aqui eu não tinha conhecimento da existência de uma API para o LICHESS.
     #
+    
     if message.content.startswith('_playerChess'):
         nome_usuario = message.content.split(' ')[1]
         st = requests.get(f'https://api.chess.com/pub/player/{nome_usuario}/stats')
@@ -83,6 +87,7 @@ async def on_message(message): # 'on_message()' é usado para determinar oque fa
             await message.channel.send(embed=embed)
         else:
             await message.channel.send('Este jogador não existe...')
+            
 
     if message.content.startswith('_gameLichess'): # Está linha da inicio a pesquisa de jogos no Lichess
         try:
@@ -179,23 +184,20 @@ async def on_message(message): # 'on_message()' é usado para determinar oque fa
                 if partida['canal'] == message.channel.id:
                     for move in partida['moves']:
                         board.push_san(move)
-                    try:
-                        board.push_san(movimento)
-                        fen = board.fen()
-                        fen = fen.split(' ')[0]
-                        await message.channel.send(f'https://chessboardimage.com/{fen}.png')
-                        if partida['brancas'] == message.author.id:
-                            bd.mover_peca(partida['_id'],partida['pretas'],movimento)
-                        if partida['pretas'] == message.author.id:
-                            bd.mover_peca(partida['_id'],partida['brancas'],movimento)
-                        if board.is_check() and not board.is_checkmate():
-                            await message.channel.send('!! CHECK !!')
-                        if board.is_checkmate():
-                            await message.channel.send('!! CHECK-MATE !!')
-                            await message.channel.send(f"VITÓRIA PARA <@{message.author.id}>")
-                            bd.excluir_partida(partida['_id'])
-                    except:
-                        await message.channel.send('Tente um lance válido')
+                    board.push_san(movimento)
+                    fen = board.fen()
+                    fen = fen.split(' ')[0]
+                    await message.channel.send(f'https://chessboardimage.com/{fen}.png')
+                    if partida['brancas'] == message.author.id:
+                        bd.mover_peca(partida['_id'],partida['pretas'],movimento)
+                    if partida['pretas'] == message.author.id:
+                        bd.mover_peca(partida['_id'],partida['brancas'],movimento)
+                    if board.is_check() and not board.is_checkmate():
+                        await message.channel.send('!! CHECK !!')
+                    if board.is_checkmate():
+                        await message.channel.send('!! CHECK-MATE !!')
+                        await message.channel.send(f"VITÓRIA PARA <@{message.author.id}>")
+                        bd.excluir_partida(partida['_id']) 
                 else:
                     await message.channel.send('Sua partida não foi definida nesse canal-de-texto')
             else:
@@ -210,14 +212,10 @@ async def on_message(message): # 'on_message()' é usado para determinar oque fa
             else:
                 await message.channel.send('Não é a sua vez de jogar')
 
-    if message.content.startswith('_cep'):
-        cep = message.content.split(' ')[1]
-        response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
-        await message.channel.send(response.text)
 
     if message.content.startswith('_help'):
         embed = discord.Embed(title=f"Comandos",description='Todos os comandos do nosso bot estará disponivel aqui. Caso precise de mais informações sobre o bot entre em contanto com o nosso desenvolvedor principal o *Matheus Magalhães*', color=0x0)
-        embed.add_field(name="Perfis",value='`_playerChess [username]` --> Exibe os ratings da pessoa no **Chess.com**\n`_playerLichess [username]` --> Exibe os ratings da pessoa no **Lichess.com**')
+        embed.add_field(name="Perfis",value='`_playerChess [username]` --> Exibe os ratings da pessoa no **Chess.com** Está com defeito\n`_playerLichess [username]` --> Exibe os ratings da pessoa no **Lichess.com**')
         embed.add_field(name="Jogos",value='`_gameLichess [game-id]` --> Exibe a partida por completo, tal partida tem que ser do **Lichess.com** e o *game-id* tem que ser o código que fica depois do https://lichess.org/\n`_play [@username]` --> Jogar com alguém pelo bot, para o oponente aceitar a proposta, o oponente terá que digitar `_aceitar` no mesmo canal em que foi desafiado e para mover peças é só usar `_mv [jogada]`, as brancas sempre serão quem desafia, para desistir é apenas digitar `_desistir` quando for sua vez, Obs: Não é possível usar um canal-de-texto para dois jogos e se a proposta foi feita no canal **A** a partida só ocorrerá no canal **A**')
         await message.channel.send(embed = embed)
 
@@ -241,4 +239,4 @@ async def on_message(message): # 'on_message()' é usado para determinar oque fa
     #     response = requests.get(f'https://lichess.org/api/games/user/{username}', headers=header,params=param)
     #     print(response.text)
     
-client.run("TOKEN") # <-- Substitua aqui pela token do seu bot
+client.run(TOKENS['discord']) # <-- Substitua aqui pela token do seu bot
