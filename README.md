@@ -1,4 +1,4 @@
-# Chess Bot Discord
+![image](https://github.com/TeuzimMG/Lichess-Bot-Xadrez-Brasil/assets/71942508/69052581-6415-440c-9697-eb647f9e23d1)# Chess Bot Discord
 
 **Bot de xadrez para servidores de discord**, nele é possível jogar xadrez usando coordenadas e fazer busca por partidas e jogadores das plataformas mais famosas de xadrez.<br><br><br>
 <div align="center" styles='padding:500px'>
@@ -23,4 +23,4 @@ Esse comando é super importante e não pode ser esquecido, sem ele se torna imp
 
 ### Configurando Tokens
 
-Para inicializar o Bot é necessário criar uma aplicação na [página de desenvolvedor do discord](https://discord.com/developers/applications)
+Para inicializar o Bot é necessário criar uma aplicação na [página de desenvolvedor do discord](https://discord.com/developers/applications), e logo em seguida criar um bot para essa aplicação a habilitar o **MESSAGE CONTENT INTENT**, **SERVER MEMBERS INTENT** e **PRESENCE INTENT**
