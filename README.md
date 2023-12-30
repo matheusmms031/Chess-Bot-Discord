@@ -26,5 +26,5 @@ Esse comando é super importante e não pode ser esquecido, sem ele se torna imp
 Para inicializar o Bot é necessário criar uma aplicação na [página de desenvolvedor do discord](https://discord.com/developers/applications), e logo em seguida criar um bot para essa aplicação a habilitar o **MESSAGE CONTENT INTENT**, **SERVER MEMBERS INTENT** e **PRESENCE INTENT**.
 <br><br>
 <div align="center" styles='padding:500px'>
-    <img src='print.png' height='500'>
+    <img src='print.png' height='400'>
 </div>
