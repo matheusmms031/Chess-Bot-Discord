@@ -1,47 +1,46 @@
 # Chess Bot Discord
 
-**Bot de xadrez para servidores de discord**, nele é possível jogar xadrez usando coordenadas e fazer busca por partidas e jogadores das plataformas mais famosas de xadrez.<br><br><br>
+**Chess bot for discord servers**, it is possible to play chess using coordinates and search for matches and players from the most famous chess platforms.<br><br><br>
 <div align="center" styles='padding:500px'>
     <img src='image.png' height='200'/>
 </div>
 
-## Configurando o Bot
+## Configuring the Bot
 
-Antes de iniciar tudo devemos fazer a instalação dos pacotes e logo em seguida configurar os tokens e informações relevantes.
+Before starting everything, we must install the packages and then configure the tokens and relevant information.
 
-### Instalando dependências
+### Installing dependencies
 
-Para conseguir usar o **Chess Bot Discord** é necessário ter o `Python 3.12.x` e o `MongoDB` instalado, tendo isso em mãos é preciso abaixar o arquivo .zip do repositório e extrair no local desejado, logo depois abra o cmd na pasta do repositorio extraido e execute a seguinte linha de comando:
+To be able to use **Chess Bot Discord** you need to have `Python 3.12.x` and `MongoDB` installed, having this in hand you need to download the .zip file from the repository and extract it to the desired location, then open it cmd in the extracted repository folder and execute the following command line:
 ```bash
 pip3 install -r requirementes.txt
 ```
-Esse comando é super importante e não pode ser esquecido, sem ele se torna impossível continuar o processo de execução do bot.
+This command is super important and cannot be forgotten, without it it becomes impossible to continue the bot execution process.
 > [!IMPORTANT]
-> Caso apareça um erro de instalação e seja necessário instalar o Visual Build C++ instale a versão `1.14`
+> If an installation error appears and you need to install Visual Build C++, install version `1.14`
 
 <hr>
 
-### Criando a aplicação
+### Creating the application
 
-Para inicializar o Bot é necessário criar uma aplicação na [página de desenvolvedor do discord](https://discord.com/developers/applications), e logo em seguida criar um bot para essa aplicação a habilitar o **MESSAGE CONTENT INTENT**, **SERVER MEMBERS INTENT** e **PRESENCE INTENT**.
+To launch the Bot it is necessary to create an application on the [discord developer page](https://discord.com/developers/applications), and then create a bot for this application to enable **MESSAGE CONTENT INTENT**, **SERVER MEMBERS INTENT** and **PRESENCE INTENT**.
 
-### Configurando Tokens
+### Configuring Tokens
 
-Para configurar é necessário editar o arquivo [tokens.py](./tokens.py) e substituir para os seguintes dados:
+To configure it, you need to edit the file [tokens.py](./tokens.py) and replace it with the following data:
 ```py
 TOKENS = {
-    'discord': 'O token do bot discord',
+    'discord': 'The discord bot token',
     'mongodb': {
-        'ip': 'IP do banco de dados',
-        'porta': 'Porta do banco de dados'
+        'ip': 'Database IP',
+        'port': 'Database port'
     }
 }
 ```
 
-## Executando o Bot
+## Running the Bot
 
-Agora para executar basta entrar na pasta do repositório e digitar:
-
+Now to run it, just go to the repository folder and type:
 ```bash
 python setup.py
 ```
