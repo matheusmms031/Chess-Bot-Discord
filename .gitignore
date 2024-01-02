@@ -2,4 +2,4 @@
 venv/
 
 #tokens
-tokens.py
+./tokens.py
