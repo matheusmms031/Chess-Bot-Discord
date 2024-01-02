@@ -37,9 +37,11 @@ async def on_message(message): # 'on_message()' é usado para determinar oque fa
                 channel = guild.get_channel(proposta['canal'])
                 bd.excluir_proposta(proposta['_id'])
                 await channel.send(f"O tempo para aceitar o convite acabaou <@{proposta['brancas']}>")
+                
     #
     # Está parte do código aqui em baixo eu não usei a API do LICHESS, então ficou muito confuso por isso nem a comentei
     #
+    
     if message.content.startswith('_playerLichess'):
         playername = message.content.split(' ')[1]
         page = requests.get(f'https://lichess.org/@/{playername}')
@@ -87,7 +89,7 @@ async def on_message(message): # 'on_message()' é usado para determinar oque fa
             await message.channel.send(embed=embed)
         else:
             await message.channel.send('Este jogador não existe...')
-            
+          
 
     if message.content.startswith('_gameLichess'): # Está linha da inicio a pesquisa de jogos no Lichess
         try:
@@ -174,6 +176,7 @@ async def on_message(message): # 'on_message()' é usado para determinar oque fa
                     board_exemplo = chess.Board()
                     fen = board_exemplo.fen().split(" ")[0]
                     await message.channel.send(f'https://chessboardimage.com/{fen}.png')
+    
     
     if message.content.startswith('_mv'):
         board = chess.Board()
